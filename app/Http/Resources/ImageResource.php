@@ -21,7 +21,8 @@ class ImageResource extends JsonResource
             'uploaded_by' => $this->user->name,
             'href' => [
                 'image' => url(Storage::url($this->path)),
-                'tags' => route('image.tags', $this->id),
+                'view_tags' => route('image.tags', $this->id),
+                'add_tags' => route('image.tag.add', $this->id),
             ]
         ];
     }

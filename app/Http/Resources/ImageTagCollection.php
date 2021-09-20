@@ -19,6 +19,9 @@ class ImageTagCollection extends JsonResource
             'coords' => $this->coords,
             'label' => $this->label,
             'description' => $this->description,
+            'href' => [
+                'edit' => route('image.tag.edit', ['image_id' => $this->image->id, 'tag_id' => $this->id])
+            ]
         ];
     }
 }

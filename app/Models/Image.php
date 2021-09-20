@@ -16,4 +16,8 @@ class Image extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function image_tags() {
+        return $this->hasMany(ImageTag::class);
+    }
 }

@@ -18,13 +18,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::get('login', [AuthController::class, 'login']);
 Route::get('list', [ImageController::class, 'AllImages']);
-Route::get('image/{image_id}', [ImageController::class, 'viewImage'])->name('image.view');
-Route::get('image/{image_id}/tags', [ImageController::class, 'viewImageTags'])->name('image.tags');
+
+Route::prefix('image')->as('image.')->group(function () {
+    Route::get('{image_id}', [ImageController::class, 'viewImage'])->name('view');
+    Route::get('{image_id}/tags', [ImageController::class, 'viewImageTags'])->name('tags');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::prefix('image')->group(function () {
+    Route::prefix('image')->as('image.')->group(function () {
         Route::post('upload', [ImageController::class, 'upload']);
-        Route::post('{image_id}/tag', [ImageController::class, 'addImageTag']);
+        Route::post('{image_id}/tag', [ImageController::class, 'addImageTag'])->name('tag.add');
+        Route::put('{image_id}/tag/{tag_id}/edit', [ImageController::class, 'editImageTag'])->name('tag.edit');
     });
     Route::get('myalbum', [ImageController::class, 'myAlbum']);
     Route::post('logout', [AuthController::class, 'logout']);

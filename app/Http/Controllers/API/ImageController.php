@@ -135,6 +135,25 @@ class ImageController extends Controller
         }
     }
 
+    // Edit image tag
+    public function editImageTag(Request $request, $image_id, $tag_id) {
+        $data = $request->validate([
+            'coords' => 'required|string',
+            'label' => 'required|string|max:50',
+            'description' => 'string'
+        ]);
+
+        $data['created_at'] = Carbon::now();
+        $data['updated_at'] = Carbon::now();
+
+        DB::table('image_tags')->whereId($tag_id)->update($data);
+
+        return response()->json([
+            'message' => 'Tags updated for this image.',
+            'coords' => $data['coords']
+        ], 200);
+    }
+
     // Get images by user
     public function myAlbum() {
         $user_id = Auth::user()->id;

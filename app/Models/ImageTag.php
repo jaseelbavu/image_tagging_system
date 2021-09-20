@@ -12,4 +12,8 @@ class ImageTag extends Model
     protected $fillable = [
         'image_id', 'coords', 'label', 'description'
     ];
+
+    public function image() {
+        return $this->belongsTo(Image::class);
+    }
 }
