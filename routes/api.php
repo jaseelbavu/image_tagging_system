@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', [AuthController::class, 'register']);
-Route::get('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::get('list', [ImageController::class, 'AllImages']);
 
 Route::prefix('image')->as('image.')->group(function () {
@@ -26,7 +26,7 @@ Route::prefix('image')->as('image.')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('image')->as('image.')->group(function () {
-        Route::post('upload', [ImageController::class, 'upload']);
+        Route::post('upload', [ImageController::class, 'upload'])->name('upload');
         Route::post('{image_id}/tag', [ImageController::class, 'addImageTag'])->name('tag.add');
         Route::put('{image_id}/tag/{tag_id}/edit', [ImageController::class, 'editImageTag'])->name('tag.edit');
     });
