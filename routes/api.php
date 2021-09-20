@@ -21,6 +21,7 @@ Route::get('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('image')->group(function () {
         Route::post('upload', [ImageController::class, 'upload']);
+        Route::post('{image_id}/tag', [ImageController::class, 'imageTag']);
     });
     Route::post('logout', [AuthController::class, 'logout']);
 });

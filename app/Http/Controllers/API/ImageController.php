@@ -57,7 +57,33 @@ class ImageController extends Controller
             ]);
    
         }
-  
-   
+    }
+
+    public function imageTag(Request $request, $image_id) {
+        if(Image::whereId($image_id)->exists()) {
+            $data = $request->validate([
+                'coords' => 'required|string',
+                'label' => 'required|string|max:50',
+                'description' => 'string'
+            ]);
+    
+            $data['created_at'] = Carbon::now();
+            $data['updated_at'] = Carbon::now();
+    
+            DB::table('image_tags')
+            ->updateOrInsert(
+                ['image_id' => $image_id, 'coords' => $data['coords']],
+                $data
+            );
+    
+            return response()->json([
+                'message' => 'Tags added to the image.',
+                'coords' => $data['coords']
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No image found.',
+            ], 404);
+        }
     }
 }
