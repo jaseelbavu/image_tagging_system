@@ -17,11 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::get('login', [AuthController::class, 'login']);
+Route::get('list', [ImageController::class, 'AllImages']);
+Route::get('image/{image_id}', [ImageController::class, 'viewImage'])->name('image.view');
+Route::get('image/{image_id}/tags', [ImageController::class, 'viewImageTags'])->name('image.tags');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('image')->group(function () {
         Route::post('upload', [ImageController::class, 'upload']);
-        Route::post('{image_id}/tag', [ImageController::class, 'imageTag']);
+        Route::post('{image_id}/tag', [ImageController::class, 'addImageTag']);
     });
     Route::post('logout', [AuthController::class, 'logout']);
 });
