@@ -134,4 +134,15 @@ class ImageController extends Controller
             ], 404);
         }
     }
+
+    // Get images by user
+    public function myAlbum() {
+        $user_id = Auth::user()->id;
+        $images = Image::whereUserId($user_id)->get();
+        $data = ImageCollection::collection($images);
+
+        return response()->json([
+            'images' => $data
+        ], 200);
+    }
 }
