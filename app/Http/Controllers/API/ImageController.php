@@ -23,6 +23,7 @@ class ImageController extends Controller
         $data = ImageCollection::collection($images);
 
         return response()->json([
+            'success' => true,
             'images' => $data
         ], 200);
     }
@@ -34,10 +35,12 @@ class ImageController extends Controller
         if($image) {
             $data = new ImageResource($image);
             return response()->json([
+                'success' => true,
                 'image' => $data
             ], 200);
         } else {
             return response()->json([
+                'success' => false,
                 'message' => 'No image found'
             ], 404);
         }
@@ -50,10 +53,12 @@ class ImageController extends Controller
         if($image_tags) {
             $data = ImageTagCollection::collection($image_tags);
             return response()->json([
+                'success' => true,
                 'image' => $data
             ], 200);
         } else {
             return response()->json([
+                'success' => false,
                 'message' => 'No image found'
             ], 404);
         }
@@ -95,13 +100,14 @@ class ImageController extends Controller
             [$width, $height] = getimagesize($image);
                
             return response()->json([
+                'success' => true,
                 'message' => 'Image uploaded successfully.',
                 'url' => url(Storage::url($path)),
                 'size' => [
                     'width' => $width,
                     'height' => $height,
                 ]
-            ]);
+            ], 201);
 
         }
     }
@@ -125,11 +131,13 @@ class ImageController extends Controller
             );
     
             return response()->json([
+                'success' => true,
                 'message' => 'Tags added to the image.',
                 'coords' => $data['coords']
-            ], 200);
+            ], 201);
         } else {
             return response()->json([
+                'success' => false,
                 'message' => 'No image found.',
             ], 404);
         }
@@ -149,6 +157,7 @@ class ImageController extends Controller
         DB::table('image_tags')->whereId($tag_id)->update($data);
 
         return response()->json([
+            'success' => true,
             'message' => 'Tags updated for this image.',
             'coords' => $data['coords']
         ], 200);
@@ -161,6 +170,7 @@ class ImageController extends Controller
         $data = ImageCollection::collection($images);
 
         return response()->json([
+            'success' => true,
             'images' => $data
         ], 200);
     }
